@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { Link, useLocation } from 'react-router-dom';
 import s from '../MovieItem/MovieItem.module.css';
 
-export const MovieItem = (id, original_title, poster_path) => {
+export const MovieItem = ({ id, original_title, poster_path }) => {
   const location = useLocation();
 
   return (
-    <Link to={`/movies/${id}`} state={{ from: location }}>
+    <Link to={`/movies/${id}`} state={{ from: location }} className={s.link}>
       <li className={s.movie_item}>
         <img
           className={s.movie_item_image}
@@ -23,6 +23,6 @@ export const MovieItem = (id, original_title, poster_path) => {
 
 MovieItem.propTypes = {
   id: PropTypes.number.isRequired,
-  original_title: PropTypes.string.isRequired,
-  poster_path: PropTypes.string.isRequired,
+  original_title: PropTypes.string,
+  poster_path: PropTypes.string,
 };

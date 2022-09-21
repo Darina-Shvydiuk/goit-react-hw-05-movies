@@ -1,0 +1,21 @@
+.movie_item {
+  display: block;
+  padding: 5px;
+  text-decoration: none;
+}
+
+.movie_item_image {
+  display: block;
+  padding: 5px;
+  text-decoration: none;
+  width: 100%;
+}
+.link {
+  color: black;
+  text-decoration: none;
+  font-weight: 500;
+}
+.link:hover {
+  background-color: tomato;
+  scale: 1.05;
+}

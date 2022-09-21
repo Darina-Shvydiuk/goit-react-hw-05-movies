@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import s from '../HomePage/HomePage.module.css';
 
 import { getTrending } from '../../services/API';
 import { MovieList } from 'components/MovieList';
@@ -22,6 +23,7 @@ export const HomePage = () => {
       setStatus(Status.PENDING);
       try {
         const { data } = await getTrending();
+
         if (!data.results.length) {
           setStatus(Status.REJECTED);
           setMovies([]);
@@ -38,7 +40,7 @@ export const HomePage = () => {
 
   return (
     <>
-      <h1>Trendings Movies</h1>
+      <h1 className={s.title}>Trendings Movies</h1>
       {movies.length > 0 && <MovieList movies={movies} status={status} />}
 
       <ToastContainer autoClose={3000} />

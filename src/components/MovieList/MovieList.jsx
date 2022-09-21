@@ -38,8 +38,8 @@ MovieList.propTypes = {
   movies: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
-      original_title: PropTypes.string.isRequired,
-      poster_path: PropTypes.string.isRequired,
+      original_title: PropTypes.string,
+      poster_path: PropTypes.string,
     })
   ).isRequired,
 };

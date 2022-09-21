@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import { Loader } from 'components/Loader';
 import s from '../Layout/Layout.module.css';
 
-const Layout = () => {
+export const Layout = () => {
   const getActiveClassName = ({ isActive }) => {
     return isActive ? `${s.item} ${s.active}` : s.item;
   };
@@ -24,4 +24,4 @@ const Layout = () => {
     </>
   );
 };
-export default Layout;
+// export default Layout;
