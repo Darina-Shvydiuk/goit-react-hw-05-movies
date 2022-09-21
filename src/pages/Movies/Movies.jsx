@@ -52,12 +52,11 @@ export const Movies = () => {
   if (!movies && status === Status.REJECTED) {
     return toast.warn('Error');
   }
-  if (movies && status === Status.RESOLVED) {
-    return (
-      <>
-        <SearchBar />
-        {movies.length > 0 && <MovieList movies={movies} status={status} />}
-      </>
-    );
-  }
+
+  return (
+    <>
+      <SearchBar />
+      {movies.length > 0 && <MovieList movies={movies} status={status} />}
+    </>
+  );
 };
