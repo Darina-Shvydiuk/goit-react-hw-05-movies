@@ -6,6 +6,7 @@ import s from '../HomePage/HomePage.module.css';
 
 import { getTrending } from '../../services/API';
 import { MovieList } from 'components/MovieList';
+import { Loader } from 'components/Loader';
 
 const Status = {
   IDLE: 'idle',
@@ -38,12 +39,24 @@ export const HomePage = () => {
     })();
   }, []);
 
-  return (
-    <>
-      <h1 className={s.title}>Trendings Movies</h1>
-      {movies.length > 0 && <MovieList movies={movies} status={status} />}
+  if (!movies && status === Status.IDLE) {
+    return <></>;
+  }
 
-      <ToastContainer autoClose={3000} />
-    </>
-  );
+  if (!movies && status === Status.PENDING) {
+    return <Loader />;
+  }
+  if (!movies && status === Status.REJECTED) {
+    return toast.warn('Error');
+  }
+  if (movies && status === Status.RESOLVED) {
+    return (
+      <>
+        <h1 className={s.title}>Trendings Movies</h1>
+        {movies.length > 0 && <MovieList movies={movies} status={status} />}
+
+        <ToastContainer autoClose={3000} />
+      </>
+    );
+  }
 };

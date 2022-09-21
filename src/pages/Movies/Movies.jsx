@@ -4,15 +4,16 @@ import { getSearchMovies } from '../../services/API';
 import { MovieList } from 'components/MovieList';
 import { SearchBar } from 'components/SearchBar';
 import { toast } from 'react-toastify';
+import { Loader } from 'components/Loader';
+
+const Status = {
+  IDLE: 'idle',
+  PENDING: 'pending',
+  RESOLVED: 'resolved',
+  REJECTED: 'rejected',
+};
 
 export const Movies = () => {
-  const Status = {
-    IDLE: 'idle',
-    PENDING: 'pending',
-    RESOLVED: 'resolved',
-    REJECTED: 'rejected',
-  };
-
   const [searchParams] = useSearchParams();
   const query = searchParams.get('query');
   const [movies, setMovies] = useState([]);
@@ -41,10 +42,22 @@ export const Movies = () => {
     })();
   }, [query]);
 
-  return (
-    <>
-      <SearchBar />
-      {movies.length > 0 && <MovieList movies={movies} status={status} />}
-    </>
-  );
+  if (!movies && status === Status.IDLE) {
+    return <></>;
+  }
+
+  if (!movies && status === Status.PENDING) {
+    return <Loader />;
+  }
+  if (!movies && status === Status.REJECTED) {
+    return toast.warn('Error');
+  }
+  if (movies && status === Status.RESOLVED) {
+    return (
+      <>
+        <SearchBar />
+        {movies.length > 0 && <MovieList movies={movies} status={status} />}
+      </>
+    );
+  }
 };

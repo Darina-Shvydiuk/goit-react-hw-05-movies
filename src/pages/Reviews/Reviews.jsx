@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMovieReviews } from '../../services/API';
 import { toast } from 'react-toastify';
+import { Loader } from 'components/Loader';
 import s from '../Reviews/Reviews.module.css';
 
 const Status = {
@@ -39,17 +40,30 @@ export const Reviews = () => {
     })();
   }, [movieId]);
 
-  return (
-    <>
-      <h3>Reviews</h3>
-      <ul className={s.reviews_list}>
-        {reviews.map(({ author, id, content }) => (
-          <li key={id} className={s.reviews_item}>
-            <p className={s.reviews_author}>{author ? author : 'no name'}</p>
-            <p className={s.reviews_content}>{content}</p>
-          </li>
-        ))}
-      </ul>
-    </>
-  );
+  if (!reviews && status === Status.IDLE) {
+    return <></>;
+  }
+
+  if (!reviews && status === Status.PENDING) {
+    return <Loader />;
+  }
+  if (!reviews && status === Status.REJECTED) {
+    return toast.warn('Error');
+  }
+
+  if (reviews && status === Status.RESOLVED) {
+    return (
+      <>
+        <h3>Reviews</h3>
+        <ul className={s.reviews_list}>
+          {reviews.map(({ author, id, content }) => (
+            <li key={id} className={s.reviews_item}>
+              <p className={s.reviews_author}>{author ? author : 'no name'}</p>
+              <p className={s.reviews_content}>{content}</p>
+            </li>
+          ))}
+        </ul>
+      </>
+    );
+  }
 };
